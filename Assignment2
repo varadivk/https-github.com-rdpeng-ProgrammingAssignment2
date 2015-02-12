@@ -1,0 +1,37 @@
+# Assignment 1 - makeCacheMatrix.R
+# Here is my code, which is working
+
+makeCacheMatrix <- function(x = matrix()) {
+    inv <- NULL
+    set <- function(y) {
+        x <<- y
+        inv <<- NULL
+    }
+    get <- function() x
+    setinverse <- function(inverse) inv <<- inverse
+    getinverse <- function() inv
+    list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
+}
+
+
+# Tests
+
+x = rbind(c(1, -1/4), c(-1/4, 1))
+m = makeCacheMatrix(x)
+ m$get()
+
+
+## Assignment -2 - cacheSolve.R
+## Here is the code working
+
+cacheSolve <- function(x, ...) {
+    inv <- x$getinverse()
+    if(!is.null(inv)) {
+        message("getting cached data.")
+        return(inv)
+    }
+    data <- x$get()
+    inv <- solve(data)
+    x$setinverse(inv)
+    inv
+}
